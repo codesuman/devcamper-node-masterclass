@@ -7,38 +7,88 @@ const geocoder = require("../utils/geocoder");
 
 exports.getBootcamps = async (req, res, next) => {
   try {
-    console.log(req.query);
-    let query = { ...req.query };
-    delete query.select;
+    let query;
 
-    // Replacing gt|gte|in etc with $gt|$gte|$in
-    const queryStr = JSON.stringify(query).replace(
-      /\b(gt|gte|lt|lte|in)\b/g,
-      match => `$${match}`
-    );
+    // Copy req.query
+    const reqQuery = { ...req.query };
 
-    console.log(`queryJSON :`);
-    console.dir(JSON.parse(queryStr));
+    // Fields to exclude
+    const removeFields = ['select', 'sort', 'page', 'limit'];
 
-    query = BootcampModel.find(JSON.parse(queryStr));
+    // Loop over removeFields and delete them from reqQuery
+    removeFields.forEach(param => delete reqQuery[param]);
 
+    // Create query string
+    let queryStr = JSON.stringify(reqQuery);
+
+    // Create operators ($gt, $gte, etc)
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+
+    // Finding resource
+    query = BootcampModel.find(JSON.parse(queryStr)).populate('courses');
+
+    // Select Fields
     if (req.query.select) {
-      const selectStr = req.query.select.split(",").join(" ");
-
-      console.log(`selectStr : ${selectStr}`);
-      query = query.select(selectStr);
+      const fields = req.query.select.split(',').join(' ');
+      query = query.select(fields);
     }
 
+    // Sort
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort('-createdAt');
+    }
+
+    // Pagination
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 25;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const total = await BootcampModel.countDocuments();
+
+    query = query.skip(startIndex).limit(limit);
+
     // Executing query
-    const bootcamps = await query;
+    const results = await query;
+
+    // Pagination result
+    const pagination = {};
+
+    if (endIndex < total) {
+      pagination.next = {
+        page: page + 1,
+        limit
+      };
+    }
+
+    if (startIndex > 0) {
+      pagination.prev = {
+        page: page - 1,
+        limit
+      };
+    }
 
     res
       .status(200)
-      .json({ success: true, count: bootcamps.length, data: bootcamps });
+      .json({ success: true, count: results.length, pagination, data: results });
   } catch (error) {
     next(error);
   }
 };
+
+/**exports.getBootcamps = async (req, res, next) => {
+  try {
+    console.log(`getBootcamps NEW :`);
+
+    const result = await BootcampModel.find();
+
+    res.status(400).json({ success: true, data: result });
+  } catch (error) {
+    next(error);
+  }
+};*/
 
 exports.getBootcamp = async (req, res, next) => {
   try {
@@ -63,7 +113,7 @@ exports.createBootcamp = async (req, res, next) => {
       next(
         new ApplicationError(
           `Duplicate entry for ${Object.keys(error.keyPattern)[0]}, "${
-            error.keyValue.name
+          error.keyValue.name
           }" is already present`,
           400
         )

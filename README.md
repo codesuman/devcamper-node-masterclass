@@ -111,3 +111,10 @@ http://www.acuriousanimal.com/blog/2018/03/15/express-async-middleware/
 A 'node-geocoder' npm module is used to with provider set to 'google' and corresponding API_KEY. In the pre('save') hook we make a call to Google Geo-Coder API via node-geocoder module that we installed.
 
 Based on the address text the we passed, Google Geo-Coder will return an object with latitude-longitude etc details. Those will be persisted in the location GEO-JSON point.
+
+7> Debugging :
+
+https://www.youtube.com/watch?v=yFtU6_UaOtA - 5:00 to 8:00
+
+launch.json > Add Config > Node.JS : Attach to process
+This will attach the debug pointer to current running Node JS process, which can be your Express app running.

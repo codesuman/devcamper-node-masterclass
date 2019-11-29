@@ -13,6 +13,7 @@ connectDB();
 
 // Routes
 const bootcampRoutes = require("./routes/bootcamp");
+const courseRoutes = require("./routes/course");
 
 // Middleware
 const logError = require("./middlware/log-error");
@@ -28,6 +29,7 @@ if (process.env.NODE_ENV === "dev") app.use(morgan("dev"));
 app.use(express.json());
 
 app.use("/api/v1.0/bootcamps", bootcampRoutes);
+app.use("/api/v1.0/courses", courseRoutes);
 
 app.use(logError);
 app.use(errorHandler);

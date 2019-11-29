@@ -100,16 +100,26 @@ const BootcampSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+});
+
+BootcampSchema.virtual("courses", {
+  path: 'Course',
+  localField: '_id',
+  foreignField: 'bootcamp',
+  justOne: false
 });
 
 // Create bootcamp slug from the name
-BootcampSchema.pre("save", function(next) {
+BootcampSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
 
 // Geo-code & create location field
-BootcampSchema.pre("save", async function(next) {
+BootcampSchema.pre("save", async function (next) {
   const loc = await geoCoder.geocode(this.address);
 
   console.log(`Location details :`);
