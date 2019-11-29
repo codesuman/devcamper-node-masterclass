@@ -14,6 +14,7 @@ connectDB();
 // Routes
 const bootcampRoutes = require("./routes/bootcamp");
 const courseRoutes = require("./routes/course");
+const authRoutes = require("./routes/auth");
 
 // Middleware
 const logError = require("./middlware/log-error");
@@ -30,6 +31,7 @@ app.use(express.json());
 
 app.use("/api/v1.0/bootcamps", bootcampRoutes);
 app.use("/api/v1.0/courses", courseRoutes);
+app.use("/api/v1.0/auth", authRoutes);
 
 app.use(logError);
 app.use(errorHandler);
