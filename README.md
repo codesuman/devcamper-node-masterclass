@@ -1,8 +1,18 @@
-1> Why use dotenv libraru=y ?
+1> Why use dotenv library ?
 
 https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786
 
-2> Error handler middle wares :
+2> What are Middlwares :
+
+    https://medium.com/@selvaganesh93/how-node-js-middleware-works-d8e02a936113
+    
+    what is “app.use”?
+    https://stackoverflow.com/questions/11321635/a/11321828
+    
+    How to log all registered routes in Express?
+    https://stackoverflow.com/questions/14934452/a/14934933
+
+3> Error handler middle wares :
 
 https://expressjs.com/en/guide/error-handling.html
 
@@ -10,7 +20,7 @@ Search for :
 The default error handler
 Writing error handlers
 
-3> Application level error handlers :
+3.1> Application level error handlers :
 
 https://medium.com/learn-with-talkrise/custom-errors-with-node-express-27b91fe2d947
 
@@ -105,6 +115,7 @@ Creating error object and passing it to next callback will smoothly propogate th
 5> Async/Await middleware :
 
 http://www.acuriousanimal.com/blog/2018/03/15/express-async-middleware/
+
 
 6> GeoCoder :
 
