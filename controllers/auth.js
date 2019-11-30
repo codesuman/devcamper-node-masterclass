@@ -12,7 +12,9 @@ exports.register = async (req, res, next) => {
             role
         });
 
-        res.status(200).json({ success: true, message: 'Register is invoked' });
+        const token = user.getSignedJWTToken();
+
+        res.status(200).json({ success: true, token });
     } catch (error) {
         next(error);
     }
