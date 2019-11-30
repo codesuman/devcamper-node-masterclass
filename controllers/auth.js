@@ -13,9 +13,7 @@ exports.register = async (req, res, next) => {
             role
         });
 
-        const token = user.getSignedJWTToken();
-
-        res.status(200).json({ success: true, token });
+        sendTokenResponse(user, res);
     } catch (error) {
         next(error);
     }
@@ -34,10 +32,35 @@ exports.login = async (req, res, next) => {
 
         if (!isMatch) return next(new LoginError('Invalid credentials', 401));
 
-        const token = user.getSignedJWTToken();
-
-        res.status(200).json({ success: true, token });
+        sendTokenResponse(user, res);
     } catch (error) {
         next(error);
     }
+};
+
+const sendTokenResponse = (user, res) => {
+    console.log(`sendTokenResponse >>> `);
+    console.log(user);
+
+    // Create token
+    const token = user.getSignedJWTToken();
+
+    const options = {
+        expires: new Date(
+            Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+        ),
+        httpOnly: true
+    };
+
+    if (process.env.NODE_ENV === 'production') {
+        options.secure = true;
+    }
+
+    res
+        .status(200)
+        .cookie('token', token, options)
+        .json({
+            success: true,
+            token
+        });
 };

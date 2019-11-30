@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const colors = require("colors");
+const cookieParser = require('cookie-parser')
 
 const connectDB = require("./config/db");
 
@@ -28,6 +29,9 @@ if (process.env.NODE_ENV === "dev") app.use(morgan("dev"));
 
 // Body Parser
 app.use(express.json());
+
+// Cookie Parser
+app.use(cookieParser());
 
 app.use("/api/v1.0/bootcamps", bootcampRoutes);
 app.use("/api/v1.0/courses", courseRoutes);
