@@ -129,3 +129,11 @@ https://www.youtube.com/watch?v=yFtU6_UaOtA - 5:00 to 8:00
 
 launch.json > Add Config > Node.JS : Attach to process
 This will attach the debug pointer to current running Node JS process, which can be your Express app running.
+
+8> Mongoose Pre-save hooks : Pre middleware functions are executed one after another, when each middleware calls next.
+
+https://mongoosejs.com/docs/middleware.html#pre
+
+9> What is salting in cyrptography ?
+
+https://www.youtube.com/watch?v=--tnZMuoK3E
