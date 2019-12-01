@@ -12,6 +12,12 @@ https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-wi
     How to log all registered routes in Express?
     https://stackoverflow.com/questions/14934452/a/14934933
 
+    Diff between route.use(), route.all(), route.route() ?
+    https://stackoverflow.com/questions/45951163/a/45951264
+
+    So what does next do? What happens when you pass an argument to next() ?
+    https://stackoverflow.com/questions/13133071/a/13145618
+    
 3> Error handler middle wares :
 
 https://expressjs.com/en/guide/error-handling.html

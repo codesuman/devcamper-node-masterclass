@@ -33,7 +33,10 @@ app.use(express.json());
 // Cookie Parser
 app.use(cookieParser());
 
-app.use("/api/v1.0/bootcamps", bootcampRoutes);
+app.use("/api/v1.0/bootcamps", (req, res, next) => {
+  console.log(`server.js : app.use => bootcamps`);
+  next();
+}, bootcampRoutes);
 app.use("/api/v1.0/courses", courseRoutes);
 app.use("/api/v1.0/auth", authRoutes);
 

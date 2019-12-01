@@ -7,6 +7,12 @@ const {
 } = require("../controllers/course");
 
 router
+    .use("/", (req, res, next) => {
+        console.log(`Course.js : router.use => /`);
+        next();
+    });
+
+router
     .route("/")
     .get(getCourses)
     .post(createCourse);
