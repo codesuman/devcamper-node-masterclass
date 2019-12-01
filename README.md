@@ -18,6 +18,9 @@ https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-wi
     So what does next do? What happens when you pass an argument to next() ?
     https://stackoverflow.com/questions/13133071/a/13145618
     
+    Example in the code :
+    https://github.com/codesuman/devcamper-node-masterclass/commit/906227d2c2c3b2366f8d2d38328f2d794e1ab01b
+    
 3> Error handler middle wares :
 
 https://expressjs.com/en/guide/error-handling.html

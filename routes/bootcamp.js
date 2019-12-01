@@ -16,24 +16,9 @@ const courseRoutes = require("./course");
 router.use("/:bootcampId/courses", courseRoutes);
 
 router
-  .use("/", (req, res, next) => {
-    console.log(`Bootcamp.js : router.use => /`);
-    next();
-  });
-
-router
   .route("/")
-  .get((req, res, next) => {
-    console.log(`Bootcamp.js : router.route.get => /`);
-    next();
-  }, getBootcamps)
+  .get(getBootcamps)
   .post(createBootcamp);
-
-router
-  .use("/:id", (req, res, next) => {
-    console.log(`Bootcamp.js : router.use => /:id`);
-    next();
-  });
 
 router
   .route("/:id")

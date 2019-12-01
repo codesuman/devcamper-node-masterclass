@@ -20,6 +20,7 @@ const authRoutes = require("./routes/auth");
 // Middleware
 const logError = require("./middlware/log-error");
 const errorHandler = require("./middlware/error-handler");
+const { authenticate } = require("./middlware/auth");
 
 const PORT = process.env.PORT || 5000;
 
@@ -33,10 +34,7 @@ app.use(express.json());
 // Cookie Parser
 app.use(cookieParser());
 
-app.use("/api/v1.0/bootcamps", (req, res, next) => {
-  console.log(`server.js : app.use => bootcamps`);
-  next();
-}, bootcampRoutes);
+app.use("/api/v1.0/bootcamps", authenticate, bootcampRoutes);
 app.use("/api/v1.0/courses", courseRoutes);
 app.use("/api/v1.0/auth", authRoutes);
 
